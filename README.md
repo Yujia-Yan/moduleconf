@@ -117,11 +117,7 @@ with open(confPath, 'r') as f:
     print(model.describe())
 ```
 
-Make sure the module defined should be importable in the current search path. Here it adds the module path to the import path:
-
-> sys.path.append(os.path.join(os.path.dirname(**file**), '.'))
-
-
+Make sure the module defined should be importable in the current search path. Here it adds the module path to the import path.
 
 ### Support for configuration class containing complex type
 
