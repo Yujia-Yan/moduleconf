@@ -121,7 +121,7 @@ Make sure the module defined should be importable in the current search path. He
 
 ### Support for configuration class containing complex type
 
-It currently supports nested configuration classes and deserialization will be performed according to the prototype configuration object provided.
+It currently supports nested configuration classes and deserialization will be performed according to the prototype configuration object provided. For complex classes requiring special handling for serialization/deserialization, just implement toDict/loadDict method inside the class, and they can be used as configuration classes as well.
 
 ### Support for nested configuration file
 
