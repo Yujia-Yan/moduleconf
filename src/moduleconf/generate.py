@@ -4,6 +4,8 @@ import argparse
 from .config_manager import *
 
 import re
+import os
+import sys
 
 def namedModulePair(value):
     matches = (re.match(r"^(([^\s:]+)?:)?([^\s:]+)(:(\S+)?)?$", value))
@@ -26,12 +28,15 @@ if __name__ == "__main__":
                                                                             if name is not specified, by default it will use the moduleName.
                                                                             If configClassName is not specified, it will look for the class Config under the module""")
     parser.add_argument("--outputFilename")
+    parser.add_argument("--path", nargs="*", default= [], help="""additional pathes required to find the required module""")
 
     args = parser.parse_args()
 
     config = dict()
 
 
+    for p in args.path:
+        sys.path.append(os.path.abspath(p))
 
     for name, moduleName,configClassName in args.entry:
         if name is None:
