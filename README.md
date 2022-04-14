@@ -7,8 +7,6 @@ A minimal module-specific configuration tool for fast experimenting.
 ## Installation
 
 > pip3 install moduleconf
-> 
-> 
 
 ## Module and Module specific configuration
 
@@ -57,6 +55,10 @@ We then generate the config template for use:
 > python3 -m moduleconf.generate model:moduleA:Config >> confA.json
 > 
 > python3 -m moduleconf.generate model:moduleB:Config >> confB.json
+
+
+
+You can contain a list of key:module:moduleconfigClass tuples and it will automatically combine them into a single configuration file.
 
 
 
