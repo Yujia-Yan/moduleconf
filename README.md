@@ -1,6 +1,6 @@
 # ModuleConf
 
-A minimal module-specific configuration tool for fast experimenting.
+A minimal module-specific configuration tool for fast experimenting in python.
 
 
 
@@ -11,8 +11,8 @@ A minimal module-specific configuration tool for fast experimenting.
 ## Module and Module specific configuration
 
 For each module, we may have some configuration classes that only apply to that module. 
-However, we often need to experiment with a variety of alternate modules that may contain serveral different module configurations.
-This simple library helps with automatically load modules based on the configuration file and also automatically generate templates for creating a new configuration file.
+However, we often need to experiment with a variety of alternate modules that may contain serveral different module configurations, especially for machine learning, where we can have a huge number of different modules to be combined together, each with a very different set of parameters.
+This simple library helps with automatically loading modules based on the configuration file and also automatically generating templates for creating a new configuration file.
 
 ## Basic Usage
 
@@ -121,7 +121,7 @@ Make sure the module defined should be importable in the current search path. He
 
 ### Support for configuration class containing complex type
 
-STUB
+It currently supports nested configuration classes and deserialization will be performed according to the prototype configuration object provided.
 
 ### Support for nested configuration file
 
