@@ -1,4 +1,4 @@
-from config_manager import *
+from .config_manager import *
 
 import unittest
 

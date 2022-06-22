@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="moduleconf",
-    version="0.1.1",
+    version="0.1.3",
     author="Yujia Yan",
     description='A minimal module-specific configuration tool for fast experimenting',
     long_description=long_description,

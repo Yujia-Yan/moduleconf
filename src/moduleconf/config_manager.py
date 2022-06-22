@@ -42,17 +42,10 @@ def loadDict(obj, d):
 
     return obj
 
-def addImportPath(path):
-    pass
 
 def importModule(name):
-    # from: https://stackoverflow.com/a/19228066
-    components = name.split('.')
-    mod = __import__(components[0])
-    for comp in components[1:]:
-        mod = getattr(mod, comp)
-    return mod
-
+    import importlib
+    return importlib.import_module(name)
 
 
 def recursiveGetAttr(obj, name):
