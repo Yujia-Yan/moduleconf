@@ -19,7 +19,7 @@ def toDict(obj):
 
         return result
 
-def loadDict(obj, d):
+def loadDict(obj, d, allowMissing=False):
     """ deserialize a dict back to the class.
     for complex type, the class should implement loadDIct method
     Parameters:
@@ -27,7 +27,7 @@ def loadDict(obj, d):
         obj - the prototype for deserializing
     """
     if hasattr(obj, "loadDict") and callable(getattr(obj, "loadDict")):
-        obj.loadDict(d)
+        obj.loadDict(d, allowMissing=allowMissing)
     else:
         if isinstance(obj, dict):
             targetDict = obj
@@ -35,10 +35,13 @@ def loadDict(obj, d):
             targetDict = obj.__dict__
 
         for k in targetDict:
+            if allowMissing and k not in d:
+                continue
+
             if hasattr(targetDict[k], '__dict__'):
-                loadDict(targetDict[k], d[k])
+                loadDict(targetDict[k], d[k], allowMissing= allowMissing)
             else:
-                targetDict[k] = d[k]
+                targetDict[k] = copy.deepcopy(d[k])
 
     return obj
 
@@ -63,14 +66,14 @@ class ModuleConf:
 
     def toDict(self):
         return {
-            "module": self.moduleName,
-            "configClassName": self.configClassName,
-            "config": toDict(self.config)
-        }
+                "module": self.moduleName,
+                "configClassName": self.configClassName,
+                "config": toDict(self.config)
+                }
 
-    def loadDict(self, d):
+    def loadDict(self, d, allowMissing=False):
         self.__dict__.update(makeModuleConf(d["module"], d["configClassName"]).__dict__)
-        loadDict(self.config, d["config"])
+        loadDict(self.config, d["config"], allowMissing= allowMissing)
 
 
 
@@ -83,8 +86,19 @@ def makeModuleConf(moduleName, configClassName= "Config"):
     return ModuleConf(config, module, moduleName, configClassName)
 
 
-def parse(s):
+def parse(s, allowMissing = False):
     # get all keys
     result = {k: ModuleConf() for k in s}
-    loadDict(result, s)
+    loadDict(result, s, allowMissing)
     return result
+
+def parseFromString(inputStr, allowMissing= False):
+    return parse(json.loads(inputStr), allowMissing)
+
+
+def parseFromFile(filepath, allowMissing = False):
+    with open(filepath, 'r') as f:
+        conf = parse(json.load(f))
+    
+    return conf
+
